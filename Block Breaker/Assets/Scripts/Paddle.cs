@@ -17,6 +17,8 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		// moves the paddle based on mouse position on the x axis
+		// need to understand more about units and unity units
         float mousePosInUnits = Input.mousePosition.x / Screen.width * screenWidthInUnits;
 		Vector2 paddlePos = new Vector2(transform.position.x, transform.position.y);
 		paddlePos.x = Mathf.Clamp(mousePosInUnits, minX, maxX);
