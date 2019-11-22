@@ -7,6 +7,9 @@ public class Ball : MonoBehaviour
 	private bool hasStarted =  false;
 	// config parameters
 	[SerializeField] Paddle paddle1;
+	[SerializeField] float xPush = 2f;
+	[SerializeField] float yPush = 15f;
+	
 	
 	//state
 	Vector2 paddleToBallVector;
@@ -22,9 +25,9 @@ public class Ball : MonoBehaviour
     {
 		if(!hasStarted)
 		{
-			LockBallToPaddle();		
+			LockBallToPaddle();
+			LaunchBallOnMouseClick();	
 		}
-		LaunchBallOnMouseClick();
     }
 	
 	private void LockBallToPaddle()
@@ -37,10 +40,11 @@ public class Ball : MonoBehaviour
 	private void LaunchBallOnMouseClick()
 	{
 		// left click
-		if(Input.GetMouseButtonDown(1))
+		if(Input.GetMouseButtonDown(0))
 		{
+			hasStarted = true;
 			Debug.Log("Left mouse clicked");
-			GetComponent<RigidBody2D>().velocity = new Vector2(2f, 15f);
+			GetComponent<Rigidbody2D>().velocity = new Vector2(xPush, yPush);
 		}
 	}
 }
