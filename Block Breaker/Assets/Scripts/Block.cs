@@ -5,6 +5,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
 	[SerializeField] AudioClip audioClip;
+	[SerializeField] GameObject blockSparkleEffect;
 	
 	// Cached reference
 	Level level;
@@ -17,8 +18,26 @@ public class Block : MonoBehaviour
 	
     private void OnCollisionEnter2D(Collision2D collision)
 	{
-		AudioSource.PlayClipAtPoint(audioClip, Camera.main.transform.position);
+		DestroyBlock();
+	}
+	
+	private void DestroyBlock()
+	{
+		PlayBlockDestroySFX();
 		Destroy(gameObject);
 		level.DestroyOneBreakableBlock();
+		TriggerSparklesVFX();
+	}
+	
+	private void PlayBlockDestroySFX()
+	{		
+		FindObjectOfType<GameStatus>().AddToScore();
+		AudioSource.PlayClipAtPoint(audioClip, Camera.main.transform.position);
+	}
+	
+	private void TriggerSparklesVFX()
+	{
+		GameObject sparkles = Instantiate(blockSparkleEffect, transform.position, transform.rotation);
+		Destroy(sparkles,1f);
 	}
 }
